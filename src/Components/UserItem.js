@@ -1,13 +1,30 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useContext, useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { UsersContext } from "../store/context/usersStore";
 
 const UserItem = (props) => {
-  console.log("ss", props);
+  const [isFav, setIsFav] = useState(false);
+  const ctx = useContext(UsersContext);
+  const handelFav = () => {
+    setIsFav(!isFav);
+    if (isFav) {
+      ctx.removeFav(props.id);
+    } else {
+      ctx.addFav(props.id);
+    }
+    console.log("useres", ctx.users);
+    console.log("favU", ctx.favUsers);
+  };
   return (
     <View style={styles.userItem}>
       <Text style={styles.userText}>{props.name}</Text>
-      <Pressable onPress={props.removeUser.bind(this, props.id)}>
-        <Ionicons name="person-remove" size={24} color="white" />
+      <Pressable onPress={handelFav}>
+        <Ionicons
+          name={isFav ? "star" : "star-outline"}
+          size={24}
+          color="white"
+        />
       </Pressable>
     </View>
   );

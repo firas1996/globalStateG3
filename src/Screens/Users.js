@@ -1,37 +1,21 @@
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import UserInput from "../Components/UserInput";
 import UserItem from "../Components/UserItem";
+import { UsersContext } from "../store/context/usersStore";
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const addUserHandler = (userName) => {
-    setUsers((prevState) => [
-      ...prevState,
-      { name: userName, key: Math.random().toString() },
-    ]);
-  };
-  const removeUser = (key) => {
-    setUsers((prevState) => {
-      return prevState.filter((user) => user.key !== key);
-    });
-    console.log(key);
-    console.log("aa", users);
-  };
+  const ctx = useContext(UsersContext);
   return (
     <View style={styles.container}>
-      <UserInput addUser={addUserHandler} />
+      <UserInput />
       {/* <Text style={{ fontFamily: "open-sans" }}>fdhgfghfghgf</Text>
       <Text>fdhgfghfghgf</Text> */}
       <View style={styles.users}>
         <FlatList
-          data={users}
+          data={ctx.users}
           renderItem={(user) => (
-            <UserItem
-              removeUser={removeUser}
-              id={user.item.key}
-              name={user.item.name}
-            />
+            <UserItem id={user.item.id} name={user.item.name} />
           )}
         />
       </View>
