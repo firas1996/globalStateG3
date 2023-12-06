@@ -15,7 +15,11 @@ const Users = () => {
         <FlatList
           data={ctx.users}
           renderItem={(user) => (
-            <UserItem id={user.item.id} name={user.item.name} />
+            <UserItem
+              id={user.item.id}
+              name={user.item.name}
+              status={user.item.status}
+            />
           )}
         />
       </View>

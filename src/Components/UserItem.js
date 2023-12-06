@@ -3,25 +3,25 @@ import { useContext, useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { UsersContext } from "../store/context/usersStore";
 
-const UserItem = (props) => {
-  const [isFav, setIsFav] = useState(false);
+const UserItem = ({ id, name, status }) => {
+  // const [isFav, setIsFav] = useState(false);
   const ctx = useContext(UsersContext);
   const handelFav = () => {
-    setIsFav(!isFav);
-    if (isFav) {
-      ctx.removeFav(props.id);
+    // setIsFav(!isFav);
+    if (status) {
+      ctx.removeFav(id);
     } else {
-      ctx.addFav(props.id);
+      ctx.addFav(id);
     }
     console.log("useres", ctx.users);
     console.log("favU", ctx.favUsers);
   };
   return (
     <View style={styles.userItem}>
-      <Text style={styles.userText}>{props.name}</Text>
+      <Text style={styles.userText}>{name}</Text>
       <Pressable onPress={handelFav}>
         <Ionicons
-          name={isFav ? "star" : "star-outline"}
+          name={status ? "star" : "star-outline"}
           size={24}
           color="white"
         />

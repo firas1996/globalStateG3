@@ -14,7 +14,7 @@ const FavUsersProvider = ({ children }) => {
   const [favUsers, setFavUsers] = useState([]);
   const addUser = (data) => {
     setUsers((prevState) => [
-      { name: data, id: Math.random().toString() },
+      { name: data, id: Math.random().toString(), status: false },
       ...prevState,
     ]);
   };
@@ -25,11 +25,21 @@ const FavUsersProvider = ({ children }) => {
   };
   const addFav = (id) => {
     setFavUsers((prevState) => [id, ...prevState]);
+    let tempData = users;
+    for (let i = 0; i < tempData.length; i++) {
+      if (tempData[i].id == id) tempData[i].status = true;
+    }
+    setUsers(tempData);
   };
   const removeFav = (id) => {
     setFavUsers((prevState) => {
       return prevState.filter((item) => item !== id);
     });
+    let tempData = users;
+    for (let i = 0; i < tempData.length; i++) {
+      if (tempData[i].id == id) tempData[i].status = false;
+    }
+    setUsers(tempData);
   };
   const vals = {
     users,
